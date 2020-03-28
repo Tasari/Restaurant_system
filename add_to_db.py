@@ -38,5 +38,5 @@ session.add(cola_drink)
 session.add(nuggets_x5)
 session.add(nuggets_x10)
 
-session.commit()
+#session.commit()
 session.close()
