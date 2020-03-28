@@ -1,4 +1,4 @@
-from sqlalchemy import Column, string, Integer
+from sqlalchemy import Column, String, Integer
 from base_template import Base
 
 class Stock(Base):
