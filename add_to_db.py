@@ -22,6 +22,7 @@ nuggets_x10 = Products("10 Chicken Nuggets", 1.90)
 cheeseburger.recipe = [bun, cheese, meat]
 burger_classic.recipe = [bun, cheese, meat, lettuce]
 cola_drink.recipe = [cola]
+#[bug]not allowing multiple instances
 nuggets_x5.recipe = [chicken_nugget]*5
 nuggets_x10.recipe = [chicken_nugget]*10
 
