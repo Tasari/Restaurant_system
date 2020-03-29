@@ -1,4 +1,4 @@
-from menu import Menu
+from products import Products
 from stock import Stock
 from base_template import Session, engine, Base
 
@@ -13,11 +13,11 @@ cheese = Stock('cheese', 0.10)
 lettuce = Stock('lettuce', 0.05)
 cola = Stock('cola', 0.1)
 
-cheeseburger = Menu("Cheeseburger", 0.8)
-burger_classic = Menu('Burger Classic', 1)
-cola_drink = Menu('Cola', 0.3)
-nuggets_x5 = Menu("5 Chicken Nuggets", 1)
-nuggets_x10 = Menu("10 Chicken Nuggets", 1.90)
+cheeseburger = Products("Cheeseburger", 0.8)
+burger_classic = Products('Burger Classic', 1)
+cola_drink = Products('Cola', 0.3)
+nuggets_x5 = Products("5 Chicken Nuggets", 1)
+nuggets_x10 = Products("10 Chicken Nuggets", 1.90)
 
 cheeseburger.recipe = [bun, cheese, meat]
 burger_classic.recipe = [bun, cheese, meat, lettuce]

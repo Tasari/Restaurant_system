@@ -3,11 +3,11 @@ from sqlalchemy.orm import relationship
 
 from base_template import Base, Session
 
-class Menu(Base):
-    __tablename__ = 'menu'
+class Products(Base):
+    __tablename__ = 'products'
 
     id = Column(Integer, primary_key = True)
-    name = Column(String)
+    name = Column(String, unique=True)
     price = Column(Float)
     recipe = relationship('Stock')
 
