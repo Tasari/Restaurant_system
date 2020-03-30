@@ -14,3 +14,6 @@ class Recipe(Base):
     def __init__(self, ingredients, amount):
         self.amount = amount
         self.ingredients = ingredients
+
+    def __repr__(self):
+        return self.ingredients.__repr__()
