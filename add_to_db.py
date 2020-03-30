@@ -1,5 +1,7 @@
 from products import Products
 from stock import Stock
+from recipes import Recipe
+
 from base_template import Session, engine, Base
 
 Base.metadata.create_all(engine)
@@ -19,12 +21,12 @@ cola_drink = Products('Cola', 0.3)
 nuggets_x5 = Products("5 Chicken Nuggets", 1)
 nuggets_x10 = Products("10 Chicken Nuggets", 1.90)
 
-cheeseburger.recipe = [bun, cheese, meat]
-burger_classic.recipe = [bun, cheese, meat, lettuce]
-cola_drink.recipe = [cola]
+cheeseburger.recipe = [Recipe(meat, 1), Recipe(cheese, 1), Recipe(bun, 1)]
+burger_classic.recipe = [Recipe(meat, 1), Recipe(cheese, 1), Recipe(bun, 1), Recipe(lettuce, 1)]
+cola_drink.recipe = [Recipe(cola, 1)]
 #[bug]not allowing multiple instances
-nuggets_x5.recipe = [chicken_nugget]*5
-nuggets_x10.recipe = [chicken_nugget]*10
+nuggets_x5.recipe = [Recipe(chicken_nugget, 5)]
+nuggets_x10.recipe = [Recipe(chicken_nugget, 10)]
 
 session.add(chicken_nugget)
 session.add(bun)
