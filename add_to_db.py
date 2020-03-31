@@ -1,45 +1,55 @@
 from products import Products
 from stock import Stock
 from recipes import Recipe
+from sqlalchemy import text
 
 from base_template import Session, engine, Base
 
 Base.metadata.create_all(engine)
 
-session = Session()
+def stock_adder(name, cost):
+    session = Session()
+    name = name.lower()
+    if is_in_stock(name, session):
+        return 1
+    session.add(Stock(name, cost))
+    session.commit()
+    session.close()
+    return 0
 
-chicken_nugget = Stock('chicken_nugget', 0.15)
-bun = Stock('bun', 0.20)
-meat = Stock('meat', 0.30)
-cheese = Stock('cheese', 0.10)
-lettuce = Stock('lettuce', 0.05)
-cola = Stock('cola', 0.1)
+def is_in_stock(name, session):
+    if session.query(Products).filter(Stock.name == name).all() != []:
+        return 1
+    return 0
 
-cheeseburger = Products("Cheeseburger", 0.8)
-burger_classic = Products('Burger Classic', 1)
-cola_drink = Products('Cola', 0.3)
-nuggets_x5 = Products("5 Chicken Nuggets", 1)
-nuggets_x10 = Products("10 Chicken Nuggets", 1.90)
+def string_to_object_from_db(name, db, session):
+    ingredient_obj = session.query(db).filter(db.name == name).all()
+    if ingredient_obj == []:
+        return 0
+    print(ingredient_obj[0])
+    return ingredient_obj[0]
 
-cheeseburger.recipe = [Recipe(meat, 1), Recipe(cheese, 1), Recipe(bun, 1)]
-burger_classic.recipe = [Recipe(meat, 1), Recipe(cheese, 1), Recipe(bun, 1), Recipe(lettuce, 1)]
-cola_drink.recipe = [Recipe(cola, 1)]
-#[bug]not allowing multiple instances
-nuggets_x5.recipe = [Recipe(chicken_nugget, 5)]
-nuggets_x10.recipe = [Recipe(chicken_nugget, 10)]
+def product_adder(name, cost, recipe):
+    '''
+    Recipe has to be a list of lists, 
+    where 1st element is the name of item in stock 
+    and second is the amount of given ingredient
+    Valid use product_adder(name, cost, [[ingredient1, amount_of_ingredient1], [ingredient2, amount_of_ingredient2]])
+    '''
+    session = Session()
+    name = name.lower()
+    if is_a_product(name, session):
+        return 1
+    session.add(Products(name, 
+                         cost, 
+                         [Recipe(string_to_object_from_db(ingre_name, Stock, session), int(amount)) for ingre_name, amount in recipe]))
+    session.commit()
+    session.close()
+    return 0
 
-session.add(chicken_nugget)
-session.add(bun)
-session.add(meat)
-session.add(cheese)
-session.add(lettuce)
-session.add(cola)
+def is_a_product(name, session):
+    if session.query(Products).filter(Products.name == name).all() != []:
+        return 1
+    return 0
 
-session.add(cheeseburger)
-session.add(burger_classic)
-session.add(cola_drink)
-session.add(nuggets_x5)
-session.add(nuggets_x10)
 
-session.commit()
-session.close()

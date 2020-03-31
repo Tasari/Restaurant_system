@@ -12,9 +12,10 @@ class Products(Base):
     price = Column(Float)
     recipe = relationship('Recipe')
 
-    def __init__(self, name, price):
+    def __init__(self, name, price, recipe):
         self.name = name
         self.price = price
+        self.recipe = recipe
     
     def __repr__(self):
         return self.name

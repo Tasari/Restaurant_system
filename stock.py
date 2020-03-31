@@ -5,7 +5,7 @@ class Stock(Base):
     __tablename__ = 'stock'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, unique=True)
     quantity = Column(Integer)
     restock_price = Column(Float)
 
