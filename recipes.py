@@ -8,12 +8,12 @@ class Recipe(Base):
     
     product_id = Column(Integer, ForeignKey('products.id'), primary_key=True)
     stock_id = Column(Integer, ForeignKey('stock.id'), primary_key = True)
-    ingredients = relationship('Stock')
+    ingredient = relationship('Stock')
     amount = Column(Integer)
 
-    def __init__(self, ingredients, amount):
+    def __init__(self, ingredient, amount):
         self.amount = amount
-        self.ingredients = ingredients
+        self.ingredient = ingredient
 
     def __repr__(self):
-        return self.ingredients.__repr__()
+        return self.ingredient.__repr__()
