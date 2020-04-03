@@ -15,13 +15,16 @@ class MoneyArchive(Base):
 
 
 
-class wallet():
+class Wallet():
     Base.metadata.create_all(engine)
     def __init__(self, money):
         self.money = money
     
     def add_money(self, amount):
+        if self.money + amount < 0:
+            return 1
         self.money += amount
+
 
     def add_data_to_archive(self):
         session = Session()
@@ -29,4 +32,4 @@ class wallet():
         session.commit()  
         session.close()
 
-wallet(250).add_data_to_archive()
+wallet = Wallet(20000)

@@ -2,7 +2,7 @@ from sqlalchemy import String, Integer, Column, Table, ForeignKey, Float
 from sqlalchemy.orm import relationship
 
 from base_template import Base
-
+from wallet import wallet
 
 class Products(Base):
     __tablename__ = 'products'
