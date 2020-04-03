@@ -1,5 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
+
 from base_template import Base
+from wallet import wallet
 
 class Stock(Base):
     __tablename__ = 'stock'
@@ -22,13 +24,18 @@ class Stock(Base):
         restock(amount) - adds given amount to stock
         restock(amount, mode='set' - sets given amount in stock)
         '''
+
         if mode == 'add':
             if self.quantity + amount >= 0:
+                if wallet.add_money(-amount*self.restock_price):
+                    return -4
                 self.quantity += amount
             else:
                 return -1
         elif mode == 'set':
             if amount >= 0:
+                if wallet.add_money(-amount*self.restock_price):
+                    return -4
                 self.quantity = amount
             else:
                 return -2
