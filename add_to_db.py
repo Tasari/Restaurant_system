@@ -1,6 +1,7 @@
 from products import Products
 from stock import Stock
 from recipes import Recipe
+from tools import name_changer, string_to_object_from_db
 
 from base_template import Session, engine, Base
 
@@ -26,15 +27,6 @@ def is_in_stock(name, session):
     if session.query(Products).filter(Stock.name == name).all() != []:
         return 1
     return 0
-
-def string_to_object_from_db(name, db, session):
-    '''
-    Function returning object with given name from database
-    '''
-    ingredient_obj = session.query(db).filter(db.name == name).all()
-    if ingredient_obj == []:
-        return 0
-    return ingredient_obj[0]
 
 def add_product(name, cost, recipe):
     '''
@@ -63,14 +55,3 @@ def is_a_product(name, session):
     if session.query(Products).filter(Products.name == name).all() != []:
         return 1
     return 0
-
-def name_changer(name):
-    '''
-    Function changing all words in given string 
-    to have 1st letter capitalized and next small 
-    '''
-    new_name = ''
-    words_in_name = name.split()
-    for word in words_in_name:
-        new_name += (str(word[0].upper() + word[1:].lower()) + ' ')
-    return new_name[:-1]
