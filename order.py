@@ -20,11 +20,6 @@ class Order(Base):
         self.order = []
         self.price = 0
         self.date = date.today()
-        for item_and_amount in self.order:
-            item = item_and_amount[0]
-            amount = item_and_amount[1]
-            for i in range(amount):
-                self.price += item.price
     
     def add_product_to_order(self, product, amount):
         prod_obj = string_to_object_from_db(product, Products, self.session)
@@ -35,5 +30,17 @@ class Order(Base):
             return
         self.order.append((Order_Product(prod_obj, amount)))
 
+    def count_price(self):
+        for item_and_amount in self.order:
+            item = item_and_amount[0].ordered_product
+            amount = item_and_amount[1]
+            for i in range(amount):
+                self.price += item.price
+
     def __del__(self):
-        pass
+        self.count_price()
+        session = self.session
+        self.session = None
+        session.add(self)
+        session.commit()
+        session.close()
