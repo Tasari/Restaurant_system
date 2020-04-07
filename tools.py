@@ -16,4 +16,4 @@ def string_to_object_from_db(name, db, session):
     ingredient_obj = session.query(db).filter(db.name == name).all()
     if ingredient_obj == []:
         return 0
-    return ingredient_obj[0]
+    return ingredient_obj
