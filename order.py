@@ -22,7 +22,7 @@ class Order(Base):
         self.date = date.today()
     
     def add_product_to_order(self, product, amount):
-        prod_obj = string_to_object_from_db(product, Products, self.session)
+        prod_obj = string_to_object_from_db(name_changer(product), Products, self.session)
         try:
             assert prod_obj != 0
         except AssertionError:
@@ -34,6 +34,7 @@ class Order(Base):
         for item_and_amount in self.order:
             item = item_and_amount[0].ordered_product
             amount = item_and_amount[1]
+            self.price = 0
             for i in range(amount):
                 self.price += item.price
 
