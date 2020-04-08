@@ -1,3 +1,4 @@
 __pycache__
 testfile.py
-.gitignore
+.vscode
+.pytest_cache
