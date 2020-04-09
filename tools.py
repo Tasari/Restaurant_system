@@ -13,7 +13,7 @@ def string_to_object_from_db(name, db, session):
     '''
     Function returning object with given name from database
     '''
-    ingredient_obj = session.query(db).filter(db.name == name).all()
-    if ingredient_obj == []:
+    ingredient_obj = session.query(db).filter(db.name == name).first()
+    if ingredient_obj is None:
         return 0
-    return ingredient_obj[0]
+    return ingredient_obj

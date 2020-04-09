@@ -7,7 +7,7 @@ class Order_Product(Base):
     __tablename__ = 'order_product'
     
     product_id = Column(Integer, ForeignKey('products.id'), primary_key=True)
-    order_id = Column(Integer, ForeignKey('order.id'), primary_key = True)
+    order_id = Column(Integer, ForeignKey('orders.id'), primary_key = True)
     ordered_product = relationship('Products')
     amount = Column(Integer)
 
@@ -16,4 +16,4 @@ class Order_Product(Base):
         self.ordered_product = ordered_product
 
     def __repr__(self):
-        return self.ordered_product.__repr__()
+        return str(self.ordered_product.__repr__() + ': ' +str(self.amount))
