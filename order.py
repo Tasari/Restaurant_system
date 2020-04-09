@@ -31,10 +31,10 @@ class Order(Base):
         self.order.append((Order_Product(prod_obj, amount)))
 
     def count_price(self):
+        self.price = 0
         for item_and_amount in self.order:
-            item = item_and_amount[0].ordered_product
-            amount = item_and_amount[1]
-            self.price = 0
+            item = item_and_amount.ordered_product
+            amount = item_and_amount.amount
             for i in range(amount):
                 self.price += item.price
 

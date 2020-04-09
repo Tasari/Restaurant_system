@@ -13,5 +13,10 @@ def test_order_creation_test():
 def test_order_add_test():
     order = Order()
     order.add_product_to_order('french fries', 1)
-    order.add_product_to_order('hamBurgEr', 1)
     assert order.order[0].ordered_product.name == 'French Fries'
+
+def test_count_price():
+    order = Order()
+    order.add_product_to_order('french Fries', 4)
+    order.count_price()
+    assert order.price == 2
