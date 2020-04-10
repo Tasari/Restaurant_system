@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship
 from datetime import date
-from tools import name_changer, string_to_object_from_db
+from tools import name_changer, string_to_object_from_table
 from tables.products import Products
 from tables.order_product import Order_Product
 
@@ -22,7 +22,7 @@ class Order(Base):
         self.date = date.today()
     
     def add_product_to_order(self, product, amount):
-        prod_obj = string_to_object_from_db(name_changer(product), Products, self.session)
+        prod_obj = string_to_object_from_table(name_changer(product), Products, self.session)
         try:
             assert prod_obj != 0
         except AssertionError:

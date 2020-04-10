@@ -2,7 +2,7 @@ from sqlalchemy import String, Integer, Column, Table, ForeignKey, Float
 from sqlalchemy.orm import relationship
 from tables.stock import Stock
 from tables.recipes import Recipe
-from tools import string_to_object_from_db, name_changer
+from tools import string_to_object_from_table, name_changer
 
 from base_template import Base, Session
 from wallet import wallet
@@ -22,7 +22,7 @@ class Products(Base):
         self.recipe = []
 
     def add_ingredient_to_recipe(self, ingredient, amount):
-        ingre_obj = string_to_object_from_db(name_changer(ingredient), Stock, self.session)
+        ingre_obj = string_to_object_from_table(name_changer(ingredient), Stock, self.session)
         try:
             assert ingre_obj != 0
         except AssertionError:
