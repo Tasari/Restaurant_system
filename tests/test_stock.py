@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 def test_stock_creation():
     stock = Stock('eggs', 0.5)
-    assert stock.name == 'eggs'
+    assert stock.name == 'Eggs'
     assert stock.quantity == 0
     assert stock.restock_price == 0.5
 

@@ -7,7 +7,7 @@ from tools import string_to_object_from_table, name_changer
 from base_template import Base, Session
 from wallet import wallet
 
-class Products(Base):
+class Product(Base):
     __tablename__ = 'products'
 
     id = Column(Integer, primary_key = True)
@@ -15,9 +15,9 @@ class Products(Base):
     price = Column(Float)
     recipe = relationship('Recipe')
 
-    def __init__(self, name, price, recipe):
+    def __init__(self, name, price):
         self.session = Session()
-        self.name = name
+        self.name = name_changer(name)
         self.price = price
         self.recipe = []
 
@@ -28,7 +28,7 @@ class Products(Base):
         except AssertionError:
             print('No Object')
             return
-        self.order.append((Recipe(ingre_obj, amount)))
+        self.recipe.append((Recipe(ingre_obj, amount)))
 
     
     def __repr__(self):

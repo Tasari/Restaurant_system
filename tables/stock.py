@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from tools import name_changer
 
 from base_template import Base, Session
 from wallet import wallet
@@ -13,7 +14,7 @@ class Stock(Base):
 
     def __init__(self, name, restock_price):
         self.session = Session()
-        self.name = name
+        self.name = name_changer(name)
         self.quantity = 0
         self.restock_price = restock_price
 

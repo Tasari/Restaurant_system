@@ -1,5 +1,5 @@
 from tables.order import Order
-from tables.products import Products
+from tables.products import Product
 from tables.recipes import Recipe
 from tables.stock import Stock
 from tables.order_product import Order_Product

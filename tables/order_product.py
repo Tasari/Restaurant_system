@@ -8,7 +8,7 @@ class Order_Product(Base):
     
     product_id = Column(Integer, ForeignKey('products.id'), primary_key=True)
     order_id = Column(Integer, ForeignKey('orders.id'), primary_key = True)
-    ordered_product = relationship('Products')
+    ordered_product = relationship('Product')
     amount = Column(Integer)
 
     def __init__(self, ordered_product, amount):
