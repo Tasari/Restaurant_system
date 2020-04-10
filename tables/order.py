@@ -22,13 +22,7 @@ class Order(Base):
         self.date = date.today()
     
     def add_product_to_order(self, product, amount):
-        prod_obj = string_to_object_from_table(name_changer(product), Product, self.session)
-        try:
-            assert prod_obj != 0
-        except AssertionError:
-            print('No Object')
-            return
-        self.order.append((Order_Product(prod_obj, amount)))
+        self.order.append((Order_Product(product, amount)))
 
     def count_price(self):
         self.price = 0
