@@ -1,4 +1,4 @@
-from stock import Stock
+from tables.stock import Stock
 from unittest.mock import MagicMock
 
 def test_stock_creation():

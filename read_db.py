@@ -1,7 +1,7 @@
 from base_template import Session
-from products import Products
-from stock import Stock
-from recipes import Recipe
+from tables.products import Products
+from tables.stock import Stock
+from tables.recipes import Recipe
 
 session = Session()
 

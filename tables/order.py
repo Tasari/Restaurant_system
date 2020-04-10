@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship
 from datetime import date
 from tools import name_changer, string_to_object_from_db
-from products import Products
-from order_product import Order_Product
+from tables.products import Products
+from tables.order_product import Order_Product
 
 from base_template import Base, Session
 

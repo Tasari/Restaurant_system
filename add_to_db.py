@@ -1,6 +1,6 @@
-from products import Products
-from stock import Stock
-from recipes import Recipe
+from tables.products import Products
+from tables.stock import Stock
+from tables.recipes import Recipe
 from tools import name_changer, string_to_object_from_db
 
 from base_template import Session, engine, Base

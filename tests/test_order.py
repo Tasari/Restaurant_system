@@ -1,8 +1,8 @@
-from order import Order
-from products import Products
-from recipes import Recipe
-from stock import Stock
-from order_product import Order_Product
+from tables.order import Order
+from tables.products import Products
+from tables.recipes import Recipe
+from tables.stock import Stock
+from tables.order_product import Order_Product
 
 def test_order_creation():
     order = Order()
