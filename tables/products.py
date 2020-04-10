@@ -22,13 +22,7 @@ class Product(Base):
         self.recipe = []
 
     def add_ingredient_to_recipe(self, ingredient, amount):
-        ingre_obj = string_to_object_from_table(name_changer(ingredient), Stock, self.session)
-        try:
-            assert ingre_obj != 0
-        except AssertionError:
-            print('No Object')
-            return
-        self.recipe.append((Recipe(ingre_obj, amount)))
+        self.recipe.append((Recipe(ingredient, amount)))
 
     
     def __repr__(self):
