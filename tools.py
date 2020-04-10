@@ -1,3 +1,6 @@
+from base_template import Session, engine
+from sqlalchemy import MetaData
+
 def name_changer(name):
     '''
     Function changing all words in given string 
@@ -9,11 +12,19 @@ def name_changer(name):
         new_name += (str(word[0].upper() + word[1:].lower()) + ' ')
     return new_name[:-1]
 
-def string_to_object_from_db(name, db, session):
+def string_to_object_from_table(name, table, session):
     '''
-    Function returning object with given name from database
+    Function returning object with given name from table
     '''
-    ingredient_obj = session.query(db).filter(db.name == name).first()
+    ingredient_obj = session.query(table).filter(table.name == name).first()
     if ingredient_obj is None:
         return 0
     return ingredient_obj
+
+def is_in_table(name, table):
+    '''
+    Checks if name is in products table
+    '''
+    if Session().query(table).filter(table.name == name).all() != []:
+        return 1
+    return 0

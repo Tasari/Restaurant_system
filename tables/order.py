@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship
 from datetime import date
-from tools import name_changer, string_to_object_from_db
-from products import Products
-from order_product import Order_Product
+from tools import name_changer, string_to_object_from_table
+from tables.products import Product
+from tables.order_product import Order_Product
 
 from base_template import Base, Session
 
@@ -22,19 +22,13 @@ class Order(Base):
         self.date = date.today()
     
     def add_product_to_order(self, product, amount):
-        prod_obj = string_to_object_from_db(name_changer(product), Products, self.session)
-        try:
-            assert prod_obj != 0
-        except AssertionError:
-            print('No Object')
-            return
-        self.order.append((Order_Product(prod_obj, amount)))
+        self.order.append((Order_Product(product, amount)))
 
     def count_price(self):
+        self.price = 0
         for item_and_amount in self.order:
-            item = item_and_amount[0].ordered_product
-            amount = item_and_amount[1]
-            self.price = 0
+            item = item_and_amount.ordered_product
+            amount = item_and_amount.amount
             for i in range(amount):
                 self.price += item.price
 

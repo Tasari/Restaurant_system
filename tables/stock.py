@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
+from tools import name_changer
 
-from base_template import Base
+from base_template import Base, Session
 from wallet import wallet
 
 class Stock(Base):
@@ -12,7 +13,8 @@ class Stock(Base):
     restock_price = Column(Float)
 
     def __init__(self, name, restock_price):
-        self.name = name
+        self.session = Session()
+        self.name = name_changer(name)
         self.quantity = 0
         self.restock_price = restock_price
 
@@ -34,10 +36,18 @@ class Stock(Base):
                 return -1
         elif mode == 'set':
             if amount >= 0:
-                if wallet.add_money(-amount*self.restock_price):
+                if wallet.add_money(-(amount-self.quantity)*self.restock_price):
                     return -4
                 self.quantity = amount
             else:
                 return -2
         else:
             return -3
+    
+    def __del__(self):
+        self.count_price()
+        session = self.session
+        self.session = None
+        session.add(self)
+        session.commit()
+        session.close()
