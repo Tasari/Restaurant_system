@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from tables.products import Product
-from tools import string_to_object_from_table, name_changer
-from base_template import Base, Session
+from tools import string_to_object_from_table
+from base_template import Base
 
 class Order_Product(Base):
     __tablename__ = 'order_product'
@@ -13,9 +13,8 @@ class Order_Product(Base):
     amount = Column(Integer)
 
     def __init__(self, ordered_product, amount):
-        self.session = Session()
         self.amount = amount
-        prod_obj = string_to_object_from_table(name_changer(ordered_product), Product, self.session)
+        prod_obj = string_to_object_from_table(ordered_product, Product)
         try:
             assert prod_obj != 0
         except AssertionError:

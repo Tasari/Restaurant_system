@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship
 from datetime import date
-from tools import name_changer, string_to_object_from_table
+from tools import string_to_object_from_table
 from tables.products import Product
 from tables.order_product import Order_Product
 
@@ -16,7 +16,7 @@ class Order(Base):
     date = Column(Date)
 
     def __init__(self):
-        self.session = Session()
+
         self.order = []
         self.price = 0
         self.date = date.today()
@@ -34,8 +34,7 @@ class Order(Base):
 
     def __del__(self):
         self.count_price()
-        session = self.session
-        self.session = None
+        session = Session()
         session.add(self)
         session.commit()
         session.close()
