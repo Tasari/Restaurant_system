@@ -13,7 +13,6 @@ class Stock(Base):
     restock_price = Column(Float)
 
     def __init__(self, name, restock_price):
-        self.session = Session()
         self.name = name_changer(name)
         self.quantity = 0
         self.restock_price = restock_price
@@ -45,9 +44,7 @@ class Stock(Base):
             return -3
     
     def __del__(self):
-        self.count_price()
-        session = self.session
-        self.session = None
+        session = Session()
         session.add(self)
         session.commit()
         session.close()

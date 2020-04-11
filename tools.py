@@ -1,5 +1,4 @@
-from base_template import Session, engine
-from sqlalchemy import MetaData
+from base_template import Session
 
 def name_changer(name):
     '''
@@ -12,11 +11,11 @@ def name_changer(name):
         new_name += (str(word[0].upper() + word[1:].lower()) + ' ')
     return new_name[:-1]
 
-def string_to_object_from_table(name, table, session):
+def string_to_object_from_table(name, table):
     '''
     Function returning object with given name from table
     '''
-    ingredient_obj = session.query(table).filter(table.name == name).first()
+    ingredient_obj = Session().query(table).filter(table.name == name_changer(name)).first()
     if ingredient_obj is None:
         return 0
     return ingredient_obj
