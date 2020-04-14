@@ -5,7 +5,7 @@ from tools import string_to_object_from_table
 from tables.products import Product
 from tables.order_product import Order_Product
 
-from base_template import Base, Session
+from base_template import Base, Session, engine
 
 class Order(Base):
     __tablename__ = 'orders'
@@ -15,8 +15,7 @@ class Order(Base):
     price = Column(Float)
     date = Column(Date)
 
-    def __init__(self, wallet):
-        self.wallet = wallet
+    def __init__(self):
         self.order = []
         self.price = 0
         self.date = date.today()
@@ -32,9 +31,9 @@ class Order(Base):
             for i in range(amount):
                 self.price += item.price
 
-    def __del__(self):
+    def finish_order(self, wallet):
         self.count_price()
-        self.wallet.add(self.price)
+        wallet.add_money(self.price)
         session = Session()
         session.add(self)
         session.commit()

@@ -15,7 +15,6 @@ class Product(Base):
     recipe = relationship('Recipe')
 
     def __init__(self, name, price):
-        self.session = Session()
         self.name = name_changer(name)
         self.price = price
         self.recipe = []
@@ -24,13 +23,11 @@ class Product(Base):
         self.recipe.append((Recipe(ingredient, amount)))
 
     
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
     def __del__(self):
-        self.count_price()
-        session = self.session
-        self.session = None
+        session = Session()
         session.add(self)
         session.commit()
         session.close()
