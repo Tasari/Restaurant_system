@@ -4,8 +4,7 @@ from tables.stock import Stock
 from tables.recipes import Recipe
 from tools import string_to_object_from_table, name_changer
 
-from base_template import Base, Session
-from wallet import wallet
+from base_template import Base, Session 
 
 class Product(Base):
     __tablename__ = 'products'

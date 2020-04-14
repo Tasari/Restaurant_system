@@ -13,10 +13,7 @@ class MoneyArchive(Base):
         self.date = date.today()
         self.money = money
 
-
-
 class Wallet():
-    Base.metadata.create_all(engine)
     def __init__(self, money):
         self.money = money
     
@@ -31,5 +28,3 @@ class Wallet():
         session.add(MoneyArchive(self.money))
         session.commit()  
         session.close()
-
-wallet = Wallet(20000)

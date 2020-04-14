@@ -2,7 +2,6 @@ from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from tools import name_changer
 
 from base_template import Base, Session
-from wallet import wallet
 
 class Stock(Base):
     __tablename__ = 'stock'
@@ -20,12 +19,11 @@ class Stock(Base):
     def __repr__(self):
         return self.name
 
-    def restock(self, amount, mode='add'):
+    def restock(self, amount, wallet, mode='add'):
         '''
-        restock(amount) - adds given amount to stock
-        restock(amount, mode='set' - sets given amount in stock)
+        restock(amount) - adds given amount to stock and charges given wallet
+        restock(amount, wallet, mode='set' - sets given amount in stock and modifies given wallet)
         '''
-
         if mode == 'add':
             if self.quantity + amount >= 0:
                 if wallet.add_money(-amount*self.restock_price):

@@ -15,8 +15,8 @@ class Order(Base):
     price = Column(Float)
     date = Column(Date)
 
-    def __init__(self):
-
+    def __init__(self, wallet):
+        self.wallet = wallet
         self.order = []
         self.price = 0
         self.date = date.today()
@@ -34,6 +34,7 @@ class Order(Base):
 
     def __del__(self):
         self.count_price()
+        self.wallet.add(self.price)
         session = Session()
         session.add(self)
         session.commit()
