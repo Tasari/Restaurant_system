@@ -21,11 +21,3 @@ def string_to_object_from_table(name, table):
         return 0
     session.close()
     return ingredient_obj
-
-def is_in_table(name, table):
-    '''
-    Checks if name is in products table
-    '''
-    if Session().query(table).filter(table.name == name).all() != []:
-        return 1
-    return 0
