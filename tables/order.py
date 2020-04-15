@@ -1,11 +1,9 @@
-from sqlalchemy import Column, Integer, ForeignKey, Float, Date
+from sqlalchemy import Column, Integer, Float, Date
 from sqlalchemy.orm import relationship
 from datetime import date
-from tools import string_to_object_from_table
-from tables.products import Product
 from tables.order_product import Order_Product
 
-from base_template import Base, Session, engine
+from base_template import Base, Session
 
 class Order(Base):
     __tablename__ = 'orders'

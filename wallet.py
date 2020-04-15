@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Date, Float, Integer
-from base_template import Base, Session, engine
+from base_template import Base, Session
 from datetime import date
 
 class MoneyArchive(Base):

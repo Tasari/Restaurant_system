@@ -1,5 +1,4 @@
 from tables.stock import Stock
-from unittest.mock import MagicMock
 from wallet import Wallet
 
 def test_stock_creation():
