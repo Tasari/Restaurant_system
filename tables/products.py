@@ -1,11 +1,9 @@
-from sqlalchemy import String, Integer, Column, Table, ForeignKey, Float
+from sqlalchemy import String, Integer, Column, Float
 from sqlalchemy.orm import relationship
-from tables.stock import Stock
 from tables.recipes import Recipe
-from tools import string_to_object_from_table, name_changer
+from tools import name_changer
 
-from base_template import Base, Session
-from wallet import wallet
+from base_template import Base, Session 
 
 class Product(Base):
     __tablename__ = 'products'
@@ -16,7 +14,6 @@ class Product(Base):
     recipe = relationship('Recipe')
 
     def __init__(self, name, price):
-        self.session = Session()
         self.name = name_changer(name)
         self.price = price
         self.recipe = []
@@ -25,13 +22,11 @@ class Product(Base):
         self.recipe.append((Recipe(ingredient, amount)))
 
     
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
     def __del__(self):
-        self.count_price()
-        session = self.session
-        self.session = None
+        session = Session()
         session.add(self)
         session.commit()
         session.close()

@@ -1,8 +1,6 @@
 from tables.order import Order
-from tables.products import Product
-from tables.recipes import Recipe
-from tables.stock import Stock
 from tables.order_product import Order_Product
+from wallet import Wallet
 
 def test_order_creation():
     order = Order()
@@ -43,3 +41,11 @@ def test_many_products_count_price():
     order.add_product_to_order('hamburger', 14)
     order.count_price()
     assert order.price == 93.5
+
+def test_add_order_value_to_wallet():
+    wallet = Wallet(100)
+    order = Order()
+    order.add_product_to_order('french fries', 145)
+    order.add_product_to_order('hamburger', 14)
+    order.finish_order(wallet)
+    assert wallet.money == 193.5

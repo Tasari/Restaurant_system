@@ -15,15 +15,9 @@ def string_to_object_from_table(name, table):
     '''
     Function returning object with given name from table
     '''
-    ingredient_obj = Session().query(table).filter(table.name == name_changer(name)).first()
+    session = Session()
+    ingredient_obj = session.query(table).filter(table.name == name_changer(name)).first()
     if ingredient_obj is None:
         return 0
+    session.close()
     return ingredient_obj
-
-def is_in_table(name, table):
-    '''
-    Checks if name is in products table
-    '''
-    if Session().query(table).filter(table.name == name).all() != []:
-        return 1
-    return 0

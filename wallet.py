@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Date, Float, Integer
-from base_template import Base, Session, engine
+from base_template import Base, Session
 from datetime import date
 
 class MoneyArchive(Base):
@@ -13,10 +13,7 @@ class MoneyArchive(Base):
         self.date = date.today()
         self.money = money
 
-
-
 class Wallet():
-    Base.metadata.create_all(engine)
     def __init__(self, money):
         self.money = money
     
@@ -31,5 +28,3 @@ class Wallet():
         session.add(MoneyArchive(self.money))
         session.commit()  
         session.close()
-
-wallet = Wallet(20000)
