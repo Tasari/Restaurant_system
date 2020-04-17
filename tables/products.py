@@ -30,3 +30,4 @@ class Product(Base):
         session.add(self)
         session.commit()
         session.close()
+    

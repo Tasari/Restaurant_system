@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer, Float, Date
+from sqlalchemy import Column, Integer, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import date
 from tables.order_product import Order_Product
 
-from base_template import Base, Session
+from base_template import Base, Session, engine
 
 class Order(Base):
     __tablename__ = 'orders'
@@ -12,6 +12,7 @@ class Order(Base):
     order = relationship('Order_Product')
     price = Column(Float)
     date = Column(Date)
+    worker_id = Column(Integer, ForeignKey('workers.id'))
 
     def __init__(self):
         self.order = []
@@ -36,3 +37,4 @@ class Order(Base):
         session.add(self)
         session.commit()
         session.close()
+Base.metadata.create_all(engine)
