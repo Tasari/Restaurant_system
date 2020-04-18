@@ -4,6 +4,10 @@ from tools import name_changer
 from base_template import Base, Session
 
 class Stock(Base):
+    '''
+    Table holding data about items in warehouse
+    '''
+
     __tablename__ = 'stock'
 
     id = Column(Integer, primary_key=True)
@@ -12,6 +16,12 @@ class Stock(Base):
     restock_price = Column(Float)
 
     def __init__(self, name, restock_price):
+        '''
+        Creates new item in stock normalizing the name
+        Parameters:
+            name (str): String representing the name of the item
+            restock_price (float): Cost of adding 1 item to the stock
+        '''
         self.name = name_changer(name)
         self.quantity = 0
         self.restock_price = restock_price
@@ -21,8 +31,15 @@ class Stock(Base):
 
     def restock(self, amount, wallet, mode='add'):
         '''
-        restock(amount) - adds given amount to stock and charges given wallet
-        restock(amount, wallet, mode='set' - sets given amount in stock and modifies given wallet)
+        Adds given amount of item to stock 
+        subtracting money from wallet, works in 2 modes
+        Parameters:
+            amount (int): Amount which you want to add to/in the stock
+            wallet (Wallet): Which wallet should be charged
+            mode ('add', 'set'): Mode in which should restock work
+        Usage:
+            restock(amount) - adds given amount to stock and charges given wallet
+            restock(amount, wallet, mode='set' - sets given amount in stock and modifies given wallet)
         '''
         if mode == 'add':
             if self.quantity + amount >= 0:
@@ -42,6 +59,9 @@ class Stock(Base):
             return -3
     
     def __del__(self):
+        '''
+        Saves data to table
+        '''
         session = Session()
         session.add(self)
         session.commit()
