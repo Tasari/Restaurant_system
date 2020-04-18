@@ -29,17 +29,17 @@ def test_worker_finish_order():
     worker = Worker('Spam eggs')
     order = Order()
     order.add_product_to_order('Hamburger', 2)
-    order.finish_order(MagicMock, worker)
+    order.finish_order(MagicMock(), worker)
     assert order in worker.orders
 
 def test_worker_orders_price():
     worker = Worker('Spam ham')
     order = Order()
     order.add_product_to_order('hamburger', 2)
-    order.finish_order(MagicMock, worker)
+    order.finish_order(MagicMock(), worker)
     order = Order()
     order.add_product_to_order('hamburger', 1)
     order.add_product_to_order('french fries', 1)
-    order.finish_order(MagicMock, worker)
+    order.finish_order(MagicMock(), worker)
     assert worker.orders_price_sum() == 5
     

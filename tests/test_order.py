@@ -1,6 +1,7 @@
 from tables.order import Order
 from tables.order_product import Order_Product
 from wallet import Wallet
+from unittest.mock import MagicMock
 
 def test_order_creation():
     order = Order()
@@ -47,5 +48,5 @@ def test_add_order_value_to_wallet():
     order = Order()
     order.add_product_to_order('french fries', 145)
     order.add_product_to_order('hamburger', 14)
-    order.finish_order(wallet)
+    order.finish_order(wallet, MagicMock())
     assert wallet.money == 193.5

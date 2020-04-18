@@ -30,3 +30,4 @@ class Worker(Base):
         all_orders_sum = 0
         for order in self.orders:
             all_orders_sum += order.price
+        return all_orders_sum

@@ -30,11 +30,12 @@ class Order(Base):
             for i in range(amount):
                 self.price += item.price
 
-    def finish_order(self, wallet):
+    def finish_order(self, wallet, worker):
         self.count_price()
         wallet.add_money(self.price)
+        worker.orders.append(self)
         session = Session()
         session.add(self)
+        session.expunge_all()
         session.commit()
         session.close()
-Base.metadata.create_all(engine)
