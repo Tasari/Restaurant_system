@@ -19,3 +19,14 @@ class Worker(Base):
         self.rank = 0
         self.orders = []
         self.work_hours = 0
+    
+    def promotion(self, ranks=1):
+        self.rank += ranks
+
+    def add_work_hours(self, hours):
+        self.work_hours += hours
+
+    def orders_price_sum(self):
+        all_orders_sum = 0
+        for order in self.orders:
+            all_orders_sum += order.price

@@ -15,6 +15,8 @@ def test_worker_promotion():
     assert worker.rank == 1
     worker.promotion()
     assert worker.rank == 2
+    worker.promotion(-1)
+    assert worker.rank == 1
 
 def test_worker_work_hours():
     worker = Worker("Eggs Ham")
@@ -39,5 +41,5 @@ def test_worker_orders_price():
     order.add_product_to_order('hamburger', 1)
     order.add_product_to_order('french fries', 1)
     order.finish_order(MagicMock, worker)
-    assert worker.orders_price() == 5
+    assert worker.orders_price_sum() == 5
     
