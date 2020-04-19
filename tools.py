@@ -3,7 +3,9 @@ from base_template import Session
 def name_changer(name):
     '''
     Function changing all words in given string 
-    to have 1st letter capitalized and next small 
+    to have 1st letter capitalized and next small
+    Parameters:
+        name (str): name which will be normalized
     '''
     new_name = ''
     words_in_name = name.split()
@@ -14,6 +16,9 @@ def name_changer(name):
 def string_to_object_from_table(name, table):
     '''
     Function returning object with given name from table
+    Parameters:
+        name (str): Name of item which will be normalized and searched
+        table (Table): Table in which name will be searched
     '''
     session = Session()
     ingredient_obj = session.query(table).filter(table.name == name_changer(name)).first()
