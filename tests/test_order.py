@@ -4,22 +4,34 @@ from wallet import Wallet
 from unittest.mock import MagicMock
 
 def test_order_creation():
+    '''
+    Tests valid creation of object from table
+    '''
     order = Order()
     assert order.order == []
     assert order.price == 0
 
 def test_order_add():
+    '''
+    Tests valid addition of product to order
+    '''
     order = Order()
     order.add_product_to_order('french fries', 1)
     assert order.order[0].ordered_product.name == 'French Fries'
 
 def test_count_price():
+    '''
+    Tests valid count of price in order
+    '''
     order = Order()
     order.add_product_to_order('french Fries', 4)
     order.count_price()
     assert order.price == 2
 
 def test_multiple_count_price():
+    '''
+    Asserts that each count gives the same output
+    '''
     order = Order()
     order.add_product_to_order('french Fries', 4)
     order.count_price()
@@ -28,6 +40,9 @@ def test_multiple_count_price():
     assert order.price == 2
 
 def test_many_products_adds():
+    '''
+    Tests adding many products to order
+    '''
     order = Order()
     order.add_product_to_order('french fries', 145)
     order.add_product_to_order('hamburger', 14)
@@ -37,6 +52,9 @@ def test_many_products_adds():
     assert order.order[1].amount == 14
 
 def test_many_products_count_price():
+    '''
+    Tests valid counting of price when multiple items are present
+    '''
     order = Order()
     order.add_product_to_order('french fries', 145)
     order.add_product_to_order('hamburger', 14)
@@ -44,6 +62,9 @@ def test_many_products_count_price():
     assert order.price == 93.5
 
 def test_add_order_value_to_wallet():
+    '''
+    Tests adding money to wallet after order is finished
+    '''
     wallet = Wallet(100)
     order = Order()
     order.add_product_to_order('french fries', 145)

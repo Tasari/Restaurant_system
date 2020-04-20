@@ -2,12 +2,18 @@ from tables.stock import Stock
 from wallet import Wallet
 
 def test_stock_creation():
+    '''
+    Tests valid creation of object from table
+    '''
     stock = Stock('eggs', 0.5)
     assert stock.name == 'Eggs'
     assert stock.quantity == 0
     assert stock.restock_price == 0.5
 
 def test_restock_add():
+    '''
+    Tests adding item's amount to stock
+    '''
     stock = Stock('ham', 1)
     stock.restock(15, Wallet(99999))
     assert stock.quantity == 15
@@ -16,6 +22,9 @@ def test_restock_add():
     assert stock.quantity != 15
 
 def test_restock_set():
+    '''
+    Tests setting item's amount to stock
+    '''
     stock = Stock('spam', 15)
     stock.restock(15, Wallet(99999), mode='set')
     assert stock.quantity == 15
@@ -24,6 +33,9 @@ def test_restock_set():
     assert stock.quantity != 30
 
 def test_restock_add_wallet():
+    '''
+    Tests subtracting cost of item from wallet
+    '''
     stock = Stock('ham', 1)
     wallet = Wallet(50)
     stock.restock(15, wallet)
@@ -32,6 +44,9 @@ def test_restock_add_wallet():
     assert wallet.money == 20
 
 def test_restock_set_wallet():
+    '''
+    Tests setting wallet money based on previous money in it
+    '''
     stock = Stock('spam', 15)
     wallet = Wallet(250)
     stock.restock(15, wallet, mode='set')

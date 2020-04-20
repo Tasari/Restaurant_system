@@ -3,6 +3,9 @@ from tables.order import Order
 from unittest.mock import MagicMock
 
 def test_worker_creation():
+    '''
+    Tests valid creation of object from table
+    '''
     worker = Worker("toBias HayMond")
     assert worker.name == 'Tobias Haymond'
     assert worker.rank == 0
@@ -10,6 +13,9 @@ def test_worker_creation():
     assert worker.work_hours == 0
 
 def test_worker_promotion():
+    '''
+    Tests promotion and demotion of worker
+    '''
     worker = Worker("Foo Bar")
     worker.promotion()
     assert worker.rank == 1
@@ -19,6 +25,9 @@ def test_worker_promotion():
     assert worker.rank == 1
 
 def test_worker_work_hours():
+    '''
+    Tests adding work hours to worker data
+    '''
     worker = Worker("Eggs Ham")
     worker.add_work_hours(15)
     assert worker.work_hours == 15
@@ -26,6 +35,9 @@ def test_worker_work_hours():
     assert worker.work_hours == 20
 
 def test_worker_finish_order():
+    '''
+    Tests valid adding order to ones finished by worker
+    '''
     worker = Worker('Spam eggs')
     order = Order()
     order.add_product_to_order('Hamburger', 2)
@@ -33,6 +45,9 @@ def test_worker_finish_order():
     assert order in worker.orders
 
 def test_worker_orders_price():
+    '''
+    Tests valid counting of money from orders created by worker
+    '''
     worker = Worker('Spam ham')
     order = Order()
     order.add_product_to_order('hamburger', 2)
