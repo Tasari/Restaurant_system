@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import date
 from tables.order_product import Order_Product
+from tools import string_to_object_from_table
+from tables.products import Product
 
 from base_template import Base, Session, engine
 
@@ -56,13 +58,18 @@ class Order(Base):
         wallet.add_money(self.price)
         worker.orders.append(self)
 
+    def subtract_ordered_products_recipe_from_stock(self):
+        for product_and_amount in self.order:
+            product = string_to_object_from_table(product_and_amount.ordered_product.name, Product)
+            for i in range(product_and_amount.amount):
+                print(product)
+                product.remove_ingredients_from_stock()
+
     def __del__(self):
         '''
         Saves order to database
         '''
         session = Session()
         session.add(self)
-        #allows usage of order after commit
-        session.expunge_all()
         session.commit()
         session.close()

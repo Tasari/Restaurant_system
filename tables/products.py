@@ -1,7 +1,8 @@
 from sqlalchemy import String, Integer, Column, Float
 from sqlalchemy.orm import relationship
 from tables.recipes import Recipe
-from tools import name_changer
+from tools import name_changer, update_object_quantity_in_table, string_to_object_from_table
+from tables.stock import Stock
 
 from base_template import Base, Session 
 
@@ -14,7 +15,7 @@ class Product(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String, unique=True)
     price = Column(Float)
-    recipe = relationship('Recipe')
+    recipe = relationship('Recipe', backref='products')
 
     def __init__(self, name, price):
         '''
@@ -36,6 +37,20 @@ class Product(Base):
         '''
         self.recipe.append((Recipe(ingredient, amount)))
 
+    def remove_ingredients_from_stock(self):
+        '''
+        Removes ingredients of every item from stock based on recipe
+        '''
+        session = Session()
+        recipe = session.query(Recipe).\
+            filter(Recipe.product_id == self.id).\
+                all()
+
+        for ingredient_and_amount in recipe:
+            name = ingredient_and_amount.ingredient.name
+            amount = ingredient_and_amount.amount
+            stock = string_to_object_from_table(name, Stock)
+            update_object_quantity_in_table(name, Stock, stock.quantity - amount)
     
     def __str__(self):
         return self.name
