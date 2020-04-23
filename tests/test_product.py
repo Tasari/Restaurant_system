@@ -1,4 +1,6 @@
 from tables.products import Product
+from tools import string_to_object_from_table
+from tables.stock import Stock
 
 def test_product_creation():
     '''
@@ -30,3 +32,11 @@ def test_many_ingredients_adds():
     assert product.recipe[1].ingredient.name == 'Meat'
     assert product.recipe[2].ingredient.name == 'Bun'
     assert product.recipe[2].amount == 2
+
+def test_remove_ingredients_from_stock():
+    product = string_to_object_from_table('hamburger', Product)
+    meat = string_to_object_from_table('meat', Stock)
+    bun = string_to_object_from_table('bun', Stock)
+    product.remove_ingredients_from_stock()
+    assert meat.quantity-1 == string_to_object_from_table('meat', Stock).quantity
+    assert bun.quantity-2 == string_to_object_from_table('bun', Stock).quantity
