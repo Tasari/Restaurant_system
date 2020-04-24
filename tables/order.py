@@ -62,7 +62,6 @@ class Order(Base):
         for product_and_amount in self.order:
             product = string_to_object_from_table(product_and_amount.ordered_product.name, Product)
             for i in range(product_and_amount.amount):
-                print(product)
                 product.remove_ingredients_from_stock()
 
     def __del__(self):

@@ -1,6 +1,6 @@
-from tables.stock import Stock
+from tables.stock import Stock, update_object_quantity_in_Stock
 from wallet import Wallet
-from tools import string_to_object_from_table, update_object_quantity_in_table
+from tools import string_to_object_from_table
 
 def test_stock_creation():
     '''
@@ -63,9 +63,9 @@ def test_take_item_from_stock():
     '''
     stock = string_to_object_from_table('Ham', Stock)
     assert stock.quantity == 30
-    update_object_quantity_in_table(stock.name, Stock, stock.quantity-2)
+    update_object_quantity_in_Stock(stock.name, stock.quantity-2)
     stock = string_to_object_from_table('Ham', Stock)
     assert string_to_object_from_table('Ham', Stock).quantity == 28
-    update_object_quantity_in_table(stock.name, Stock, stock.quantity+2)
+    update_object_quantity_in_Stock(stock.name, stock.quantity+2)
     stock = string_to_object_from_table('Ham', Stock)
     assert string_to_object_from_table('Ham', Stock).quantity == 30    

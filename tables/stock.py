@@ -66,3 +66,10 @@ class Stock(Base):
         session.add(self)
         session.commit()
         session.close()
+        
+def update_object_quantity_in_Stock(name, new_quantity):
+    session = Session()
+    session.ingredient_obj = session.query(Stock).\
+        filter(Stock.name == name_changer(name)).\
+            update({Stock.quantity: new_quantity}, synchronize_session=False)
+    session.commit()

@@ -1,6 +1,7 @@
 from tools import name_changer, string_to_object_from_table
 
 from tables.products import Product
+from tables.stock import Stock, update_object_quantity_in_Stock
 
 def test_name_changer():
     '''
@@ -16,3 +17,10 @@ def test_string_to_object_from_table():
     assert isinstance(string_to_object_from_table('Hamburger', Product), Product) == True
     assert string_to_object_from_table('foobar', Product) == 0
     assert isinstance(string_to_object_from_table('hamBurgeR', Product), Product) == True
+
+def test_update_quantity_in_Stock():
+    '''
+    Test valid update table data
+    '''
+    update_object_quantity_in_Stock('Potato', 200)
+    assert string_to_object_from_table('Potato', Stock).quantity == 200

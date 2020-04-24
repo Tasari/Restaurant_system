@@ -1,8 +1,8 @@
 from sqlalchemy import String, Integer, Column, Float
 from sqlalchemy.orm import relationship
 from tables.recipes import Recipe
-from tools import name_changer, update_object_quantity_in_table, string_to_object_from_table
-from tables.stock import Stock
+from tools import name_changer, string_to_object_from_table
+from tables.stock import Stock, update_object_quantity_in_Stock
 
 from base_template import Base, Session 
 
@@ -50,7 +50,7 @@ class Product(Base):
             name = ingredient_and_amount.ingredient.name
             amount = ingredient_and_amount.amount
             stock = string_to_object_from_table(name, Stock)
-            update_object_quantity_in_table(name, Stock, stock.quantity - amount)
+            update_object_quantity_in_Stock(name, stock.quantity - amount)
     
     def __str__(self):
         return self.name
