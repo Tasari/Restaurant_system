@@ -39,7 +39,8 @@ class Product(Base):
 
     def remove_ingredients_from_stock(self):
         '''
-        Removes ingredients of every item from stock based on recipe
+        Removes ingredients of every item from
+        stock based on recipe
         '''
         session = Session()
         recipe = session.query(Recipe).\

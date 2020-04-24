@@ -68,6 +68,12 @@ class Stock(Base):
         session.close()
         
 def update_object_quantity_in_Stock(name, new_quantity):
+    '''
+    Sets new quantity in stock table
+    Parameters:
+        name (str): Name of product to be updated
+        new_quantity (int): Amount to be set in table
+    '''
     session = Session()
     session.ingredient_obj = session.query(Stock).\
         filter(Stock.name == name_changer(name)).\
