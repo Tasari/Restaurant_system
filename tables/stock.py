@@ -45,14 +45,14 @@ class Stock(Base):
             if self.quantity + amount >= 0:
                 if wallet.add_money(-amount*self.restock_price):
                     return -4
-                self.quantity += amount
+                update_object_quantity_in_Stock(self.name, self.quantity + amount)
             else:
                 return -1
         elif mode == 'set':
             if amount >= 0:
                 if wallet.add_money(-(amount-self.quantity)*self.restock_price):
                     return -4
-                self.quantity = amount
+                update_object_quantity_in_Stock(self.name, amount)
             else:
                 return -2
         else:

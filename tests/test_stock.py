@@ -15,20 +15,21 @@ def test_restock_add():
     '''
     Tests adding item's amount to stock
     '''
-    stock = Stock('ham', 1)
-    stock.restock(15, Wallet(99999))
-    assert stock.quantity == 15
-    stock.restock(15, Wallet(99999))
-    assert stock.quantity == 30
-    assert stock.quantity != 15
+    stock_old = string_to_object_from_table('hAm',Stock)
+    stock_old.restock(15, Wallet(99999))
+    stock_new = string_to_object_from_table('hAm',Stock)
+    assert stock_old.quantity+15 == stock_new.quantity
+    stock_new.restock(15, Wallet(99999))
+    assert stock_new.quantity + 15 == string_to_object_from_table('hAm',Stock).quantity
 
 def test_restock_set():
     '''
     Tests setting item's amount to stock
     '''
-    stock = Stock('spam', 15)
+    stock = string_to_object_from_table("SpAm", Stock)
     stock.restock(15, Wallet(99999), mode='set')
-    assert stock.quantity == 15
+    assert 15 == string_to_object_from_table("SpAm", Stock).quantity
+    stock = string_to_object_from_table('sPAm', Stock)
     stock.restock(15, Wallet(99999), mode='set')
     assert stock.quantity == 15
     assert stock.quantity != 30
@@ -48,19 +49,23 @@ def test_restock_set_wallet():
     '''
     Tests setting wallet money based on previous money in it
     '''
-    stock = Stock('spam', 15)
+    update_object_quantity_in_Stock('SpAm', 0)
+    stock = string_to_object_from_table('SPaM', Stock)
     wallet = Wallet(250)
     stock.restock(15, wallet, mode='set')
     assert wallet.money == 25
+    stock = string_to_object_from_table('SPaM', Stock)
     stock.restock(15, wallet, mode='set')
     assert wallet.money == 25
+    stock = string_to_object_from_table('SPaM', Stock)
     stock.restock(10, wallet, mode='set')
     assert wallet.money == 100
 
-def test_take_item_from_stock():
+def test_update_item_in_stock():
     '''
     Tests valid substraction of item's amount from quantity in stock
     '''
+    update_object_quantity_in_Stock('haM', 30)
     stock = string_to_object_from_table('Ham', Stock)
     assert stock.quantity == 30
     update_object_quantity_in_Stock(stock.name, stock.quantity-2)
