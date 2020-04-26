@@ -1,7 +1,7 @@
 from tables.worker import Worker
 from tables.order import Order
 from unittest.mock import MagicMock
-
+from tools import string_to_object_from_table
 def test_worker_creation():
     '''
     Tests valid creation of object from table
@@ -16,19 +16,19 @@ def test_worker_promotion():
     '''
     Tests promotion and demotion of worker
     '''
-    worker = Worker("Foo Bar")
+    worker = string_to_object_from_table('Jack Smith', Worker)
     worker.promotion()
     assert worker.rank == 1
     worker.promotion()
     assert worker.rank == 2
-    worker.promotion(-1)
-    assert worker.rank == 1
+    worker.promotion(-2)
+    assert worker.rank == 0
 
 def test_worker_work_hours():
     '''
     Tests adding work hours to worker data
     '''
-    worker = Worker("Eggs Ham")
+    worker = string_to_object_from_table('Jack Smith', Worker)
     worker.add_work_hours(15)
     assert worker.work_hours == 15
     worker.add_work_hours(5)
@@ -38,23 +38,24 @@ def test_worker_finish_order():
     '''
     Tests valid adding order to ones finished by worker
     '''
-    worker = Worker('Spam eggs')
+    worker = string_to_object_from_table('Jack Smith', Worker)
     order = Order()
     order.add_product_to_order('Hamburger', 2)
-    order.finish_order(MagicMock(), worker)
+    worker.finish_order(MagicMock(), order)
     assert order in worker.orders
 
 def test_worker_orders_price():
     '''
     Tests valid counting of money from orders created by worker
     '''
-    worker = Worker('Spam ham')
+    worker = string_to_object_from_table('Paul Phoenix', Worker)
+    worker.orders = []
     order = Order()
     order.add_product_to_order('hamburger', 2)
-    order.finish_order(MagicMock(), worker)
+    worker.finish_order(MagicMock(), order)
     order = Order()
     order.add_product_to_order('hamburger', 1)
     order.add_product_to_order('french fries', 1)
-    order.finish_order(MagicMock(), worker)
-    assert worker.orders_price_sum() == 5
+    worker.finish_order(MagicMock(), order)
+    assert worker.orders_price_sum() == 6.4
     

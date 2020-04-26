@@ -1,9 +1,10 @@
 from tables.order import Order
 from tables.order_product import Order_Product
 from tables.stock import Stock
+from tables.worker import Worker
 from wallet import Wallet
-from unittest.mock import MagicMock
 from tools import string_to_object_from_table
+from base_template import Session
 
 def test_order_creation():
     '''
@@ -67,12 +68,14 @@ def test_add_order_value_to_wallet():
     '''
     Tests adding money to wallet after order is finished
     '''
+    session = Session()
+    worker = string_to_object_from_table('Jack Smith', Worker)
     wallet = Wallet(100)
     order = Order()
-    order.add_product_to_order('french fries', 145)
-    order.add_product_to_order('hamburger', 14)
-    order.finish_order(wallet, MagicMock())
-    assert float(wallet.money) == 270.2
+    order.add_product_to_order('french fries', 1)
+    order.add_product_to_order('hamburger', 1)
+    worker.finish_order(wallet, order)
+    assert float(wallet.money) == 102.8
 
 def test_remove_ingredients_from_stock():
     order = Order()

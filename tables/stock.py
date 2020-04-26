@@ -70,3 +70,4 @@ class Stock(Base):
             filter(Stock.name == self.name).\
                 update({Stock.quantity: new_quantity}, synchronize_session=False)
         session.commit()
+        session.close()

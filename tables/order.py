@@ -45,21 +45,6 @@ class Order(Base):
             for i in range(amount):
                 self.price += item.price
 
-    def finish_order(self, wallet, worker):
-        '''
-        Finishes order, counts money, 
-        subtracts recipe from stock, adds it to wallet,
-        and adds the order to the worker
-
-        Parameters:
-            wallet (Wallet): Wallet object which will get the money from order
-            worker (Worker): Worker who completes the order
-        '''
-        self.count_price()
-        self.subtract_ordered_products_recipe_from_stock
-        wallet.add_money(self.price)
-
-
     def subtract_ordered_products_recipe_from_stock(self):
         '''
         Function substracting recipe of each product in order
