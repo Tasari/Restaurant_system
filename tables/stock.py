@@ -70,13 +70,3 @@ class Stock(Base):
             filter(Stock.name == self.name).\
                 update({Stock.quantity: new_quantity}, synchronize_session=False)
         session.commit()
-    
-    def __del__(self):
-        '''
-        Saves data to table
-        '''
-        session = Session()
-        session.add(self)
-        session.commit()
-        session.close()
-        

@@ -55,13 +55,3 @@ class Product(Base):
     
     def __str__(self):
         return self.name
-
-    def __del__(self):
-        '''
-        Saves data to table
-        '''
-        session = Session()
-        session.add(self)
-        session.commit()
-        session.close()
-    

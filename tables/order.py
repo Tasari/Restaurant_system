@@ -70,11 +70,3 @@ class Order(Base):
             for i in range(product_and_amount.amount):
                 product.remove_ingredients_from_stock()
 
-    def __del__(self):
-        '''
-        Saves order to database
-        '''
-        session = Session()
-        session.add(self)
-        session.commit()
-        session.close()
