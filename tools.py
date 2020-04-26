@@ -21,7 +21,9 @@ def string_to_object_from_table(name, table):
         table (Table): Table in which name will be searched
     '''
     session = Session()
-    ingredient_obj = session.query(table).filter(table.name == name_changer(name)).first()
+    ingredient_obj = session.query(table).\
+        filter(table.name == name_changer(name)).\
+            first()
     if ingredient_obj is None:
         return 0
     session.close()

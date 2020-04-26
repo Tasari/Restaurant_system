@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import Column, String, Integer, Float, Numeric
 from tools import name_changer
 
 from base_template import Base, Session
@@ -13,7 +13,7 @@ class Stock(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     quantity = Column(Integer)
-    restock_price = Column(Float)
+    restock_price = Column(Numeric(scale=2))
 
     def __init__(self, name, restock_price):
         '''
@@ -45,24 +45,29 @@ class Stock(Base):
             if self.quantity + amount >= 0:
                 if wallet.add_money(-amount*self.restock_price):
                     return -4
-                self.quantity += amount
+                self.update_object_quantity_in_Stock(self.quantity + amount)
             else:
                 return -1
         elif mode == 'set':
             if amount >= 0:
                 if wallet.add_money(-(amount-self.quantity)*self.restock_price):
                     return -4
-                self.quantity = amount
+                self.update_object_quantity_in_Stock(amount)
             else:
                 return -2
         else:
             return -3
-    
-    def __del__(self):
+        
+    def update_object_quantity_in_Stock(self, new_quantity):
         '''
-        Saves data to table
+        Sets new quantity in stock table
+        Parameters:
+            name (str): Name of product to be updated
+            new_quantity (int): Amount to be set in table
         '''
         session = Session()
-        session.add(self)
+        session.query(Stock).\
+            filter(Stock.name == self.name).\
+                update({Stock.quantity: new_quantity}, synchronize_session=False)
         session.commit()
         session.close()

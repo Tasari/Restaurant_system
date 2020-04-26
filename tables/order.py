@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, Float, Date, ForeignKey
+from sqlalchemy import Column, Integer, Numeric, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import date
 from tables.order_product import Order_Product
+from tools import string_to_object_from_table
+from tables.products import Product
 
 from base_template import Base, Session, engine
 
@@ -13,7 +15,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key = True)
     order = relationship('Order_Product')
-    price = Column(Float)
+    price = Column(Numeric(scale=2))
     date = Column(Date)
     worker_id = Column(Integer, ForeignKey('workers.id'))
 
@@ -43,26 +45,13 @@ class Order(Base):
             for i in range(amount):
                 self.price += item.price
 
-    def finish_order(self, wallet, worker):
+    def subtract_ordered_products_recipe_from_stock(self):
         '''
-        Finishes order, counts money and adds it to wallet,
-        and adds the order to the worker
+        Function substracting recipe of each product in order
+        from stock
+        '''
+        for product_and_amount in self.order:
+            product = string_to_object_from_table(product_and_amount.ordered_product.name, Product)
+            for i in range(product_and_amount.amount):
+                product.remove_ingredients_from_stock()
 
-        Parameters:
-            wallet (Wallet): Wallet object which will get the money from order
-            worker (Worker): Worker who completes the order
-        '''
-        self.count_price()
-        wallet.add_money(self.price)
-        worker.orders.append(self)
-
-    def __del__(self):
-        '''
-        Saves order to database
-        '''
-        session = Session()
-        session.add(self)
-        #allows usage of order after commit
-        session.expunge_all()
-        session.commit()
-        session.close()
