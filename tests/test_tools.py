@@ -1,7 +1,7 @@
 from tools import name_changer, string_to_object_from_table
 
 from tables.products import Product
-from tables.stock import Stock, update_object_quantity_in_Stock
+from tables.stock import Stock
 
 def test_name_changer():
     '''
@@ -22,5 +22,6 @@ def test_update_quantity_in_Stock():
     '''
     Test valid update table data
     '''
-    update_object_quantity_in_Stock('Potato', 200)
+    potato = string_to_object_from_table('Potato', Stock)
+    potato.update_object_quantity_in_Stock(200)
     assert string_to_object_from_table('Potato', Stock).quantity == 200

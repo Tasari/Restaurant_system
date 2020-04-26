@@ -45,18 +45,31 @@ class Stock(Base):
             if self.quantity + amount >= 0:
                 if wallet.add_money(-amount*self.restock_price):
                     return -4
-                update_object_quantity_in_Stock(self.name, self.quantity + amount)
+                self.update_object_quantity_in_Stock(self.quantity + amount)
             else:
                 return -1
         elif mode == 'set':
             if amount >= 0:
                 if wallet.add_money(-(amount-self.quantity)*self.restock_price):
                     return -4
-                update_object_quantity_in_Stock(self.name, amount)
+                self.update_object_quantity_in_Stock(amount)
             else:
                 return -2
         else:
             return -3
+        
+    def update_object_quantity_in_Stock(self, new_quantity):
+        '''
+        Sets new quantity in stock table
+        Parameters:
+            name (str): Name of product to be updated
+            new_quantity (int): Amount to be set in table
+        '''
+        session = Session()
+        session.ingredient_obj = session.query(Stock).\
+            filter(Stock.name == self.name).\
+                update({Stock.quantity: new_quantity}, synchronize_session=False)
+        session.commit()
     
     def __del__(self):
         '''
@@ -67,15 +80,3 @@ class Stock(Base):
         session.commit()
         session.close()
         
-def update_object_quantity_in_Stock(name, new_quantity):
-    '''
-    Sets new quantity in stock table
-    Parameters:
-        name (str): Name of product to be updated
-        new_quantity (int): Amount to be set in table
-    '''
-    session = Session()
-    session.ingredient_obj = session.query(Stock).\
-        filter(Stock.name == name_changer(name)).\
-            update({Stock.quantity: new_quantity}, synchronize_session=False)
-    session.commit()

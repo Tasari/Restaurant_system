@@ -1,4 +1,4 @@
-from tables.stock import Stock, update_object_quantity_in_Stock
+from tables.stock import Stock
 from wallet import Wallet
 from tools import string_to_object_from_table
 
@@ -49,7 +49,8 @@ def test_restock_set_wallet():
     '''
     Tests setting wallet money based on previous money in it
     '''
-    update_object_quantity_in_Stock('SpAm', 0)
+    spam = string_to_object_from_table('SpAm', Stock)
+    spam.update_object_quantity_in_Stock(0)
     stock = string_to_object_from_table('SPaM', Stock)
     wallet = Wallet(250)
     stock.restock(15, wallet, mode='set')
@@ -65,12 +66,13 @@ def test_update_item_in_stock():
     '''
     Tests valid substraction of item's amount from quantity in stock
     '''
-    update_object_quantity_in_Stock('haM', 30)
+    ham = string_to_object_from_table('ham', Stock)
+    ham.update_object_quantity_in_Stock(30)
     stock = string_to_object_from_table('Ham', Stock)
     assert stock.quantity == 30
-    update_object_quantity_in_Stock(stock.name, stock.quantity-2)
+    stock.update_object_quantity_in_Stock(stock.quantity-2)
     stock = string_to_object_from_table('Ham', Stock)
     assert string_to_object_from_table('Ham', Stock).quantity == 28
-    update_object_quantity_in_Stock(stock.name, stock.quantity+2)
+    stock.update_object_quantity_in_Stock(stock.quantity+2)
     stock = string_to_object_from_table('Ham', Stock)
     assert string_to_object_from_table('Ham', Stock).quantity == 30    
