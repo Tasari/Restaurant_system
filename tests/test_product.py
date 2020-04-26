@@ -39,4 +39,4 @@ def test_remove_ingredients_from_stock():
     bun = string_to_object_from_table('bun', Stock)
     product.remove_ingredients_from_stock()
     assert meat.quantity-1 == string_to_object_from_table('meat', Stock).quantity
-    assert bun.quantity-2 == string_to_object_from_table('bun', Stock).quantity
+    assert bun.quantity-1 == string_to_object_from_table('bun', Stock).quantity

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, Date, ForeignKey
+from sqlalchemy import Column, Integer, Numeric, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import date
 from tables.order_product import Order_Product
@@ -15,7 +15,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key = True)
     order = relationship('Order_Product')
-    price = Column(Float)
+    price = Column(Numeric(scale=2))
     date = Column(Date)
     worker_id = Column(Integer, ForeignKey('workers.id'))
 
@@ -58,7 +58,7 @@ class Order(Base):
         self.count_price()
         self.subtract_ordered_products_recipe_from_stock
         wallet.add_money(self.price)
-        worker.orders.append(self)
+
 
     def subtract_ordered_products_recipe_from_stock(self):
         '''

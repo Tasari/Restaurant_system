@@ -1,4 +1,4 @@
-from sqlalchemy import String, Integer, Column, Float
+from sqlalchemy import String, Integer, Column, Numeric
 from sqlalchemy.orm import relationship
 from tables.recipes import Recipe
 from tools import name_changer, string_to_object_from_table
@@ -14,7 +14,7 @@ class Product(Base):
 
     id = Column(Integer, primary_key = True)
     name = Column(String, unique=True)
-    price = Column(Float)
+    price = Column(Numeric(scale=2))
     recipe = relationship('Recipe', backref='products')
 
     def __init__(self, name, price):

@@ -28,7 +28,7 @@ def test_count_price():
     order = Order()
     order.add_product_to_order('french Fries', 4)
     order.count_price()
-    assert order.price == 2
+    assert float(order.price) == 4
 
 def test_multiple_count_price():
     '''
@@ -37,9 +37,9 @@ def test_multiple_count_price():
     order = Order()
     order.add_product_to_order('french Fries', 4)
     order.count_price()
-    assert order.price == 2
+    assert order.price == 4
     order.count_price()
-    assert order.price == 2
+    assert order.price == 4
 
 def test_many_products_adds():
     '''
@@ -61,7 +61,7 @@ def test_many_products_count_price():
     order.add_product_to_order('french fries', 145)
     order.add_product_to_order('hamburger', 14)
     order.count_price()
-    assert order.price == 93.5
+    assert float(order.price) == 170.2
 
 def test_add_order_value_to_wallet():
     '''
@@ -72,7 +72,7 @@ def test_add_order_value_to_wallet():
     order.add_product_to_order('french fries', 145)
     order.add_product_to_order('hamburger', 14)
     order.finish_order(wallet, MagicMock())
-    assert wallet.money == 193.5
+    assert float(wallet.money) == 270.2
 
 def test_remove_ingredients_from_stock():
     order = Order()

@@ -26,10 +26,10 @@ def test_restock_set():
     '''
     Tests setting item's amount to stock
     '''
-    stock = string_to_object_from_table("SpAm", Stock)
+    stock = string_to_object_from_table("lettuce", Stock)
     stock.restock(15, Wallet(99999), mode='set')
-    assert 15 == string_to_object_from_table("SpAm", Stock).quantity
-    stock = string_to_object_from_table('sPAm', Stock)
+    assert 15 == string_to_object_from_table("lettuce", Stock).quantity
+    stock = string_to_object_from_table('lettuce', Stock)
     stock.restock(15, Wallet(99999), mode='set')
     assert stock.quantity == 15
     assert stock.quantity != 30
@@ -38,7 +38,7 @@ def test_restock_add_wallet():
     '''
     Tests subtracting cost of item from wallet
     '''
-    stock = Stock('ham', 1)
+    stock = Stock('Cola', 1)
     wallet = Wallet(50)
     stock.restock(15, wallet)
     assert wallet.money == 35
@@ -49,18 +49,18 @@ def test_restock_set_wallet():
     '''
     Tests setting wallet money based on previous money in it
     '''
-    spam = string_to_object_from_table('SpAm', Stock)
+    spam = string_to_object_from_table('lettuce', Stock)
     spam.update_object_quantity_in_Stock(0)
-    stock = string_to_object_from_table('SPaM', Stock)
+    stock = string_to_object_from_table('lettuce', Stock)
     wallet = Wallet(250)
     stock.restock(15, wallet, mode='set')
-    assert wallet.money == 25
-    stock = string_to_object_from_table('SPaM', Stock)
+    assert float(wallet.money) == 248.5
+    stock = string_to_object_from_table('lettuce', Stock)
     stock.restock(15, wallet, mode='set')
-    assert wallet.money == 25
-    stock = string_to_object_from_table('SPaM', Stock)
+    assert float(wallet.money) == 248.5
+    stock = string_to_object_from_table('lettuce', Stock)
     stock.restock(10, wallet, mode='set')
-    assert wallet.money == 100
+    assert float(wallet.money) == 249
 
 def test_update_item_in_stock():
     '''

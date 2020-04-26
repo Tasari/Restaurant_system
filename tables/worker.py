@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, String
+from sqlalchemy import Column, Integer, Numeric, String
 from sqlalchemy.orm import relationship
 from tools import name_changer
 
@@ -14,8 +14,9 @@ class Worker(Base):
     name = Column(String)
     rank = Column(Integer)
     work_hours = Column(Integer)
+    hourly_rate = Column(Numeric(scale=2))
     orders = relationship('Order')
-    
+
 
     def __init__(self, name):
         '''
@@ -27,6 +28,7 @@ class Worker(Base):
         self.rank = 0
         self.orders = []
         self.work_hours = 0
+        self.hourly_rate = 15
     
     def promotion(self, ranks=1):
         '''
@@ -36,7 +38,8 @@ class Worker(Base):
             ranks (int): How many ranks shoud worker advance
         '''
         self.rank += ranks
-
+        self.hourly_rate = float(self.hourly_rate) + ranks*1.5
+    
     def add_work_hours(self, hours):
         '''
         Adds work hours to worker
@@ -53,4 +56,5 @@ class Worker(Base):
         all_orders_sum = 0
         for order in self.orders:
             all_orders_sum += order.price
-        return all_orders_sum
+        return float(all_orders_sum)
+        
