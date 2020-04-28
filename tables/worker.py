@@ -15,10 +15,11 @@ class Worker(Base):
     rank = Column(Integer)
     work_hours = Column(Integer)
     hourly_rate = Column(Numeric(scale=2))
+    username = Column(String, unique=True)
+    password = Column(String)
     orders = relationship('Order', backref = 'Worker', lazy = 'joined')
 
-
-    def __init__(self, name):
+    def __init__(self, name, username, password):
         '''
         Creates worker normalizing the name
         Parameters:
@@ -29,6 +30,8 @@ class Worker(Base):
         self.orders = []
         self.work_hours = 0
         self.hourly_rate = 15
+        self.username = username
+        self.password = password
     
     def promotion(self, ranks=1):
         '''
