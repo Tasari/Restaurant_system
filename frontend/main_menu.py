@@ -1,7 +1,6 @@
 from tkinter import Tk, Label, Button
 from tkinter.ttk import Notebook, Frame
-from frontend.order.order_creation import order_creation
-from frontend.order.order_show import order_show
+from frontend.order.order_tab import order_tab_menu
 from frontend.products.product_add import product_add
 from frontend.products.product_modify import product_modify
 from frontend.products.product_remove import product_remove
@@ -19,12 +18,7 @@ def main_menu(user):
     tabs.grid(column=0, row=0, columnspan=25, rowspan=25, sticky="NEWS")
     
     tab_Order = Frame(tabs)
-    new_order_button = Button(tab_Order, text = "Create new order", 
-                            height=12,
-                            width=25,
-                            command = order_creation)
-    new_order_button.grid(column=0, row=0)
-
+    order_tab_menu(tab_Order)
     tab_Products = Frame(tabs)
     new_product_button = Button(tab_Products, text = "Create new product", 
                             height=12,
