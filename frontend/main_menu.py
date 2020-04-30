@@ -1,12 +1,8 @@
 from tkinter import Tk, Label, Button
 from tkinter.ttk import Notebook, Frame
 from frontend.order.order_tab import order_tab_menu
-from frontend.products.product_add import product_add
-from frontend.products.product_modify import product_modify
-from frontend.products.product_remove import product_remove
-from frontend.stock.stock_add import stock_add
-from frontend.stock.stock_modify import stock_modify
-from frontend.stock.stock_remove import stock_remove
+from frontend.products.product_tab import products_tab_menu
+from frontend.stock.stock_tab import stock_tab_menu
 from frontend.workers.worker_add import worker_add
 from frontend.workers.worker_modify import worker_modify
 from frontend.workers.worker_remove import worker_remove
@@ -20,13 +16,10 @@ def main_menu(user):
     tab_Order = Frame(tabs)
     order_tab_menu(tab_Order)
     tab_Products = Frame(tabs)
-    new_product_button = Button(tab_Products, text = "Create new product", 
-                            height=12,
-                            width=25,
-                            command = product_add)
-    new_product_button.grid(column=0, row=0)
+    products_tab_menu(tab_Products)
 
     tab_Stock = Frame(tabs)
+    stock_tab_menu
     new_product_button = Button(tab_Stock, text = "Create new stock", 
                             height=12,
                             width=25,
