@@ -15,16 +15,13 @@ def main_menu(user):
     
     tab_Order = Frame(tabs)
     order_tab_menu(tab_Order)
+
     tab_Products = Frame(tabs)
     products_tab_menu(tab_Products)
 
     tab_Stock = Frame(tabs)
-    stock_tab_menu
-    new_product_button = Button(tab_Stock, text = "Create new stock", 
-                            height=12,
-                            width=25,
-                            command = stock_add)
-    new_product_button.grid(column=0, row=0)    
+    stock_tab_menu(tab_Stock)
+
     
     tab_Workers = Frame(tabs)
     new_worker_button = Button(tab_Workers, text = "Create new worker", 
