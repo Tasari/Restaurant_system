@@ -3,9 +3,7 @@ from tkinter.ttk import Notebook, Frame
 from frontend.order.order_tab import order_tab_menu
 from frontend.products.product_tab import products_tab_menu
 from frontend.stock.stock_tab import stock_tab_menu
-from frontend.workers.worker_add import worker_add
-from frontend.workers.worker_modify import worker_modify
-from frontend.workers.worker_remove import worker_remove
+from frontend.workers.workers_tab import workers_tab_menu
 
 def main_menu(user):
     main_menu = Tk()
@@ -22,13 +20,8 @@ def main_menu(user):
     tab_Stock = Frame(tabs)
     stock_tab_menu(tab_Stock)
 
-    
     tab_Workers = Frame(tabs)
-    new_worker_button = Button(tab_Workers, text = "Create new worker", 
-                            height=12,
-                            width=25,
-                            command = worker_add)
-    new_worker_button.grid(column=0, row=0)    
+    workers_tab_menu(tab_Workers)
 
     tabs.add(tab_Order, text="Order")
     tabs.add(tab_Products, text="Products")
