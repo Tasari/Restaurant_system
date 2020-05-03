@@ -6,11 +6,13 @@ def test_worker_creation():
     '''
     Tests valid creation of object from table
     '''
-    worker = Worker("toBias HayMond")
+    worker = Worker("toBias HayMond", 'thaymond', 'tobiash')
     assert worker.name == 'Tobias Haymond'
     assert worker.rank == 0
     assert worker.orders == []
     assert worker.work_hours == 0
+    assert worker.username == 'thaymond'
+    assert worker.password == 'tobiash'
 
 def test_worker_promotion():
     '''
