@@ -6,9 +6,11 @@ from frontend.tools.scrollable_frame import ScrollFrame
 from tables.order import Order
 
 class PreOrder():
-    def __init__(self):
+    def __init__(self, user, wallet):
         self.possible_to_order = get_all_items_from_table(Product)
         self.ordered = []
+        self.user = user
+        self.wallet = wallet
 
     def add_to_ordered(self, product):
         try:
@@ -27,14 +29,16 @@ class PreOrder():
         except AssertionError:
             print("That product is not ordered")
 
-    def finish_preorder(self, amount_selectors_list, wallet, user):
+    def finish_preorder(self, amount_selectors_list, user, wallet, to_destroy=None):
         final_order = Order()
         for amount_selector in amount_selectors_list:
-            final_order.add_product_to_order(amount_selector.item, amount_selector.get_entry())
+            final_order.add_product_to_order(amount_selector.item.name, int(amount_selector.get_entry()))
         user.finish_order(wallet, final_order)
+        if to_destroy:
+            to_destroy.destroy()
 
 def order_creation(user, wallet):
-    preorder = PreOrder()
+    preorder = PreOrder(user, wallet)
     create_order_window(preorder)
     return
 
@@ -54,7 +58,8 @@ def create_order_window(preorder, to_destroy=None):
         amount_selectors_list.append(amount_selector)
         amount_selector.pack()
     all_items_in_order.grid(row=1, columnspan=2)
-
+    finish_button = Button(new_order_window, text="Finish order", command=lambda: preorder.finish_preorder(amount_selectors_list, preorder.user, preorder.wallet, new_order_window))
+    finish_button.grid(row=2, column=0)
 
 def edit_order(master, preorder, mode):
     master.destroy()
