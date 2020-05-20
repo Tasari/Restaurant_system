@@ -28,3 +28,9 @@ def string_to_object_from_table(name, table):
         return 0
     session.close()
     return ingredient_obj
+
+def get_all_items_from_table(table):
+    session = Session()
+    all_items = session.query(table).all()
+    session.close()
+    return all_items

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Numeric, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, session
 from tools import name_changer
 
 from base_template import Base, Session
@@ -75,3 +75,7 @@ class Worker(Base):
         order.subtract_ordered_products_recipe_from_stock()
         wallet.add_money(order.price)
         self.orders.append(order)
+        x = session.object_session(order)
+        x.add(order)
+        x.commit()
+        x.close()
