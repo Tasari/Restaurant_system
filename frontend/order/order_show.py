@@ -1,6 +1,8 @@
 from tools import get_all_items_from_table
 from tables.order import Order
 from tkinter import Toplevel, Listbox, Button, Label
+from base_template import Session
+from sqlalchemy.orm import lazyload
 class AllOrders():
     def __init__(self):
         self.all_orders = get_all_items_from_table(Order)
@@ -8,7 +10,8 @@ class AllOrders():
     
 
 def order_show():
-    all_orders = get_all_items_from_table(Order)
+    session = Session()
+    all_orders = all_items = session.query(Order).options(lazyload(Order.order)).all()
     all_orders_window = Toplevel()
     all_orders_window.title("All orders")
     check_order_button = Button(all_orders_window, text="Check order")
